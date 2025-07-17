@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Suiza - Para Ti 🌹</title>
+  <title>Espero te guste- Para Ti 🌹</title>
   <style>
     body {
       margin: 0;
@@ -19,9 +19,9 @@
       text-align: center;
       padding: 20px;
       position: relative;
+      transition: background-color 1s ease;
     }
 
-    /* LOGIN ROMÁNTICO */
     #login {
       background: radial-gradient(circle, #ffd6dc 0%, #ffe6ea 100%);
       display: flex;
@@ -67,7 +67,6 @@
       transform: scale(1.05);
     }
 
-    /* INTERFAZ DE ROSAS */
     #rosas {
       background-color: #1a001a;
       color: white;
@@ -102,9 +101,11 @@
       height: 30px;
       background-size: contain;
       background-repeat: no-repeat;
+      background-position: center;
       animation: caerFlores 8s linear infinite;
       pointer-events: none;
       z-index: 1;
+      filter: drop-shadow(0 0 3px rgba(255, 192, 203, 0.8));
     }
 
     @keyframes caerFlores {
@@ -118,6 +119,12 @@
       }
     }
 
+    @keyframes moverFlores {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(30px); }
+      100% { transform: translateX(0); }
+    }
+
     audio {
       display: none;
     }
@@ -128,7 +135,7 @@
   <!-- PANTALLA DE CONTRASEÑA -->
   <div id="login" class="pantalla">
     <div class="card">
-      <h1>💖 Bienvenido a algo especial 💖</h1>
+      <h1>💖 Bienvenido a algo especial💖 </h1>
       <p>Ingresa la clave secreta para descubrir una sorpresa 🌹</p>
       <input type="password" id="password" placeholder="Contraseña">
       <br>
@@ -138,13 +145,11 @@
 
   <!-- PANTALLA DE ROSAS -->
   <div id="rosas" class="pantalla">
-    
     <div id="letra">Haz clic para comenzar la música</div>
     <audio id="audio" src="suiza.mp3"></audio>
   </div>
 
   <script>
-    // Mostrar pantalla de inicio
     document.getElementById("login").style.display = "flex";
 
     function verificar() {
@@ -157,7 +162,6 @@
       }
     }
 
-    // Letras sincronizadas
     const letra = [
       { t: 11, texto: "Todo el día pegado al phone mandándote corazones..." },
       { t: 15, texto: "Me dicen: 'No te enamores', pero es tarde ya..." },
@@ -180,18 +184,31 @@
       { t: 89, texto: "Llevarte pa Suiza y allá nos casemos.." },
       { t: 94, texto: "Te voy a amar hasta que la luna se apague.." },
       { t: 98, texto: "Hasta que cada flor se seque.." },
-      { t: 102, texto: "Esto es para ti, chiquita.."},
+      { t: 102, texto: "Esto es para ti, chiquita.." },
       { t: 105, texto: "De aquí hasta la luna, mami.." },
       { t: 112, texto: "🎶🌹 Te amo... 🌹🎶" }
     ];
+
+    const coloresRomanticos = [
+      "#4b1c3f", "#5e2747", "#6e3052", "#7c3a5d", "#8c4471",
+      "#9c5482", "#ad6693", "#be77a5", "#d08ab7", "#e19bc9"
+    ];
+    let colorIndex = 0;
+
     const audio = document.getElementById("audio");
     const cont = document.getElementById("letra");
     let current = 0;
+
+    function cambiarColorFondo() {
+      document.getElementById("rosas").style.backgroundColor = coloresRomanticos[colorIndex];
+      colorIndex = (colorIndex + 1) % coloresRomanticos.length;
+    }
 
     function mostrar() {
       if (current < letra.length && audio.currentTime >= letra[current].t) {
         cont.innerText = letra[current].texto;
         cont.style.animation = "fadeIn 2s ease";
+        cambiarColorFondo();
         current++;
       }
       requestAnimationFrame(mostrar);
@@ -201,9 +218,9 @@
       audio.play();
       mostrar();
       lluviaFlores();
+      cont.innerText = ""; // ✅ elimina "Haz clic para comenzar la música"
     }, { once: true });
 
-    // Animación de flores/pétalos
     const flores = [
       'petalo.png',
       'rosa.png',
@@ -223,7 +240,6 @@
       }, 400);
     }
 
-    // Flores también en login
     function lluviaFloresLogin() {
       setInterval(() => {
         const f = document.createElement("div");
@@ -237,6 +253,23 @@
     }
 
     lluviaFloresLogin();
+
+    // 📱 Mueve pétalos al agitar el celular
+    if (window.DeviceMotionEvent) {
+      window.addEventListener('devicemotion', function(event) {
+        const x = event.acceleration.x;
+        const y = event.acceleration.y;
+        const z = event.acceleration.z;
+        const movimiento = Math.abs(x) + Math.abs(y) + Math.abs(z);
+        if (movimiento > 30) {
+          const flores = document.querySelectorAll(".flor");
+          flores.forEach(f => {
+            f.style.animation = "moverFlores 1s ease";
+            setTimeout(() => f.style.animation = "caerFlores 8s linear infinite", 1000);
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>
