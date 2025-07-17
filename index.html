@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Suiza - Para Ti 🌹</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+    }
+
+    .pantalla {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* LOGIN ROMÁNTICO */
+    #login {
+      background: radial-gradient(circle, #ffd6dc 0%, #ffe6ea 100%);
+      display: flex;
+    }
+
+    #login .card {
+      text-align: center;
+      background-color: rgba(255,255,255,0.9);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255,0,100,0.5);
+      position: relative;
+      z-index: 2;
+    }
+
+    #login h1 {
+      color: #b22222;
+      font-size: 32px;
+    }
+
+    #login input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #ff5e78;
+      border-radius: 10px;
+      width: 80%;
+      margin-top: 15px;
+    }
+
+    #login button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      font-size: 18px;
+      color: white;
+      background: linear-gradient(to right, #ff5e78, #ff416c);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    #login button:hover {
+      transform: scale(1.05);
+    }
+
+    /* INTERFAZ DE ROSAS */
+    #rosas {
+      background-color: #1a001a;
+      color: white;
+      display: flex;
+    }
+
+    #rosas h1 {
+      margin-top: 30px;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    #letra {
+      font-size: 24px;
+      margin-top: 40px;
+      padding: 20px;
+      width: 80%;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      min-height: 100px;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .flor {
+      position: fixed;
+      top: -50px;
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      animation: caerFlores 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes caerFlores {
+      0% {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PANTALLA DE CONTRASEÑA -->
+  <div id="login" class="pantalla">
+    <div class="card">
+      <h1>💖 Bienvenido a algo especial 💖</h1>
+      <p>Ingresa la clave secreta para descubrir una sorpresa 🌹</p>
+      <input type="password" id="password" placeholder="Contraseña">
+      <br>
+      <button onclick="verificar()">💌 Ingresar</button>
+    </div>
+  </div>
+
+  <!-- PANTALLA DE ROSAS -->
+  <div id="rosas" class="pantalla">
+    
+    <div id="letra">Haz clic para comenzar la música</div>
+    <audio id="audio" src="suiza.mp3"></audio>
+  </div>
+
+  <script>
+    // Mostrar pantalla de inicio
+    document.getElementById("login").style.display = "flex";
+
+    function verificar() {
+      const clave = document.getElementById("password").value;
+      if (clave === "1618") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("rosas").style.display = "flex";
+      } else {
+        alert("Contraseña incorrecta.");
+      }
+    }
+
+    // Letras sincronizadas
+    const letra = [
+      { t: 0, texto: "Todo el día pegado al phone mandándote corazones..." },
+      { t: 8, texto: "Me dicen: ‘No pierdas la vida, mami ponte atenta..." },
+      { t: 16, texto: "Que quiero verte hoy vestida de esas flores, pareja pa’ vacilar..." },
+      { t: 24, texto: "Tú y yo en Suiza, pa’ luego regresar..." },
+      { t: 32, texto: "Brindar por este momentito así tan sensual..." },
+      { t: 40, texto: "Y que se acabe el tiempo, no quiero despertar..." },
+      { t: 48, texto: "Quiero vivir contigo este momento nada más..." },
+      { t: 56, texto: "Y que no me faltes tú jamás..." },
+      { t: 64, texto: "Tú, mami, eres mi mundo y mi paz..." },
+      { t: 72, texto: "🎶🌹 Te amo... 🌹🎶" }
+    ];
+
+    const audio = document.getElementById("audio");
+    const cont = document.getElementById("letra");
+    let current = 0;
+
+    function mostrar() {
+      if (current < letra.length && audio.currentTime >= letra[current].t) {
+        cont.innerText = letra[current].texto;
+        cont.style.animation = "fadeIn 2s ease";
+        current++;
+      }
+      requestAnimationFrame(mostrar);
+    }
+
+    document.getElementById("rosas").addEventListener('click', () => {
+      audio.play();
+      mostrar();
+      lluviaFlores();
+    }, { once: true });
+
+    // Animación de flores/pétalos
+    const flores = [
+      'imagenes/petalo.png',
+      'imagenes/rosa.png',
+      'imagenes/flor1.png',
+      'imagenes/flor2.png'
+    ];
+
+    function lluviaFlores() {
+      setInterval(() => {
+        const f = document.createElement("div");
+        f.classList.add("flor");
+        f.style.left = Math.random() * window.innerWidth + "px";
+        f.style.animationDuration = 6 + Math.random() * 4 + "s";
+        f.style.backgroundImage = `url('${flores[Math.floor(Math.random() * flores.length)]}')`;
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 10000);
+      }, 400);
+    }
+
+    // Flores también en login
+    function lluviaFloresLogin() {
+      setInterval(() => {
+        const f = document.createElement("div");
+        f.classList.add("flor");
+        f.style.left = Math.random() * window.innerWidth + "px";
+        f.style.animationDuration = 5 + Math.random() * 4 + "s";
+        f.style.backgroundImage = `url('${flores[Math.floor(Math.random() * flores.length)]}')`;
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 10000);
+      }, 500);
+    }
+
+    lluviaFloresLogin();
+  </script>
+</body>
+</html>
