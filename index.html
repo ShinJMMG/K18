@@ -41,36 +41,6 @@
       z-index: 2;
     }
 
-    #login h1 {
-      color: #b22222;
-      font-size: 32px;
-    }
-
-    #login input {
-      padding: 12px;
-      font-size: 18px;
-      border: 2px solid #ff5e78;
-      border-radius: 10px;
-      width: 80%;
-      margin-top: 15px;
-    }
-
-    #login button {
-      margin-top: 20px;
-      padding: 12px 30px;
-      font-size: 18px;
-      color: white;
-      background: linear-gradient(to right, #ff5e78, #ff416c);
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    #login button:hover {
-      transform: scale(1.05);
-    }
-
     #rosas {
       background-color: #1a001a;
       color: white;
@@ -80,30 +50,34 @@
       flex-direction: column;
     }
 
-    #rosas h1 {
-      margin-top: 30px;
-      text-shadow: 2px 2px 4px #000;
-    }
-
-    /* LETRAS MÁS GRANDES, ROMÁNTICAS CON CUADRO NEGRITO TRANSPARENTE */
+    /* LETRAS MÁS GRANDES, ROMÁNTICAS */
     #letra {
       display: inline-block;
-      font-size: 32px;              /* Tamaño grande */
+      font-size: 32px;
       font-family: 'Dancing Script', cursive;
-      padding: 20px 25px;           /* Espacio interior para el recuadro */
-      color: #ffe6f0;               /* Rosa suave */
-      text-shadow:                  /* Contorno negro suave */
+      padding: 20px;
+      color: #ffe6f0;
+      text-shadow:
         -1px -1px 2px #000,
          1px -1px 2px #000,
         -1px  1px 2px #000,
          1px  1px 2px #000;
-      background-color: rgba(0,0,0,0.4);    /* Fondo semitransparente */
-      border: 2px solid rgba(0,0,0,0.6);    /* Borde negro marcado */
-      border-radius: 15px;                  /* Esquinas redondeadas */
-      box-shadow: 0 0 10px rgba(0,0,0,0.6);  /* Sombra para realce */
+      background-color: rgba(0,0,0,0.4);
+      border: 2px solid rgba(0,0,0,0.6);
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);
       animation: fadeIn 2s ease;
-      text-align: center;                   /* Centrar texto */
-      margin: 0;                            /* Sin márgenes extra */
+      text-align: center;
+      margin: 0;
+    }
+
+    /* FOTO DE FONDO ACTIVADA */
+    #letra.fondoActivo {
+      background-image: url('fondo.jpg');  /* Ruta de la foto */
+      background-size: contain;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-blend-mode: overlay;
     }
 
     @keyframes fadeIn {
@@ -126,13 +100,13 @@
     }
 
     @keyframes caerFlores {
-      0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
       100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
     @keyframes moverFlores {
-      0%   { transform: translateX(0); }
-      50%  { transform: translateX(30px); }
+      0% { transform: translateX(0); }
+      50% { transform: translateX(30px); }
       100% { transform: translateX(0); }
     }
 
@@ -200,23 +174,22 @@
       { t: 112, texto: "🎶...🌹🌺🌼...🎶" }
     ];
 
-    const coloresRomanticos = [
-      "#4b1c3f", "#5e2747", "#6e3052", "#7c3a5d", "#8c4471",
-      "#9c5482", "#ad6693", "#be77a5", "#d08ab7", "#e19bc9"
-    ];
-    let colorIndex = 0;
-
     const audio = document.getElementById("audio");
     const cont = document.getElementById("letra");
     let current = 0;
 
     function cambiarColorFondo() {
-      document.getElementById("rosas").style.backgroundColor = coloresRomanticos[colorIndex];
-      colorIndex = (colorIndex + 1) % coloresRomanticos.length;
+      const coloresRomanticos = [
+        "#4b1c3f", "#5e2747", "#6e3052", "#7c3a5d", "#8c4471",
+        "#9c5482", "#ad6693", "#be77a5", "#d08ab7", "#e19bc9"
+      ];
+      cont.parentElement.style.backgroundColor = coloresRomanticos[current % coloresRomanticos.length];
     }
 
     function mostrar() {
       if (current < letra.length && audio.currentTime >= letra[current].t) {
+        // Activa foto en el momento de la primera letra
+        if (current === 0) cont.classList.add('fondoActivo');
         cont.innerText = letra[current].texto;
         cont.style.animation = "fadeIn 2s ease";
         cambiarColorFondo();
@@ -229,54 +202,46 @@
       audio.play();
       mostrar();
       lluviaFlores();
-      cont.innerText = ""; // elimina "Haz clic para comenzar la música"
+      cont.innerText = "";
     }, { once: true });
 
-    const flores = [
-      'flor.png',
-      'rosa.png',
-      'flor1.png',
-      'flor2.png'
-    ];
-
     function lluviaFlores() {
-      setInterval(() => {
-        const f = document.createElement("div");
-        f.classList.add("flor");
-        f.style.left = Math.random() * window.innerWidth + "px";
-        f.style.animationDuration = 6 + Math.random() * 4 + "s";
-        f.style.backgroundImage = `url('${flores[Math.floor(Math.random() * flores.length)]}')`;
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 10000);
-      }, 400);
+      const flores = ['flor.png','rosa.png','flor1.png','flor2.png'];
+      setInterval(() => { 
+        const f = document.createElement("div"); 
+        f.classList.add("flor"); 
+        f.style.left = Math.random()*window.innerWidth+"px"; 
+        f.style.animationDuration = 6+Math.random()*4+"s"; 
+        f.style.backgroundImage = `url('${flores[Math.floor(Math.random()*flores.length)]}')`; 
+        document.body.appendChild(f); 
+        setTimeout(() => f.remove(),10000); 
+      },400);
     }
 
     function lluviaFloresLogin() {
-      setInterval(() => {
-        const f = document.createElement("div");
-        f.classList.add("flor");
-        f.style.left = Math.random() * window.innerWidth + "px";
-        f.style.animationDuration = 5 + Math.random() * 4 + "s";
-        f.style.backgroundImage = `url('${flores[Math.floor(Math.random() * flores.length)]}')`;
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 10000);
-      }, 500);
+      const flores = ['flor.png','rosa.png','flor1.png','flor2.png'];
+      setInterval(() => { 
+        const f = document.createElement("div"); 
+        f.classList.add("flor"); 
+        f.style.left = Math.random()*window.innerWidth+"px"; 
+        f.style.animationDuration = 5+Math.random()*4+"s"; 
+        f.style.backgroundImage = `url('${flores[Math.floor(Math.random()*flores.length)]}')`; 
+        document.body.appendChild(f); 
+        setTimeout(() => f.remove(),10000); 
+      },500);
     }
 
     lluviaFloresLogin();
 
     // Agitar celular mueve pétalos
     if (window.DeviceMotionEvent) {
-      window.addEventListener('devicemotion', function(event) {
-        const x = event.acceleration.x;
-        const y = event.acceleration.y;
-        const z = event.acceleration.z;
-        const movimiento = Math.abs(x) + Math.abs(y) + Math.abs(z);
-        if (movimiento > 30) {
-          document.querySelectorAll(".flor").forEach(f => {
-            f.style.animation = "moverFlores 1s ease";
-            setTimeout(() => f.style.animation = "caerFlores 8s linear infinite", 1000);
-          });
+      window.addEventListener('devicemotion', function(e) { 
+        const m = Math.abs(e.acceleration.x)+Math.abs(e.acceleration.y)+Math.abs(e.acceleration.z); 
+        if(m>30){ 
+          document.querySelectorAll(".flor").forEach(f=>{ 
+            f.style.animation="moverFlores 1s ease"; 
+            setTimeout(()=>f.style.animation="caerFlores 8s linear infinite",1000); 
+          }); 
         }
       });
     }
