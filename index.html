@@ -25,7 +25,7 @@
     }
 
     #login {
-      background: radial-gradient(circle, #ffd6dc 0%, #ffe6ea 100%);
+      background: linear-gradient(135deg, #1f1c2c, #928DAB);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,12 +33,36 @@
 
     #login .card {
       text-align: center;
-      background-color: rgba(255,255,255,0.9);
+      background-color: rgba(255, 255, 255, 0.1);
       padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,0,100,0.5);
+      box-shadow: 0 0 20px rgba(255,192,203,0.5);
       position: relative;
       z-index: 2;
+      color: #fff;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    #login input[type="password"] {
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    #login button {
+      margin-top: 15px;
+      padding: 10px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 105, 135, 0.6);
     }
 
     #rosas {
@@ -52,15 +76,13 @@
       overflow: hidden;
     }
 
-    /* FONDO DE IMAGEN CENTRALIZADO EN ROSAS */
     #rosas.fondoActivo {
-      background-image: url('fondo.jpg');  /* Tu foto de fondo */
+      background-image: url('fondo.jpg');
       background-size: contain;
       background-position: center center;
       background-repeat: no-repeat;
     }
 
-    /* LETRAS MÁS GRANDES, ROMÁNTICAS CON CUADRO TRANSPARENTE */
     #letra {
       display: inline-block;
       font-size: 32px;
@@ -79,7 +101,7 @@
       animation: fadeIn 2s ease;
       text-align: center;
       margin: 0;
-      z-index: 2; /* Encima del fondo */
+      z-index: 2;
     }
 
     @keyframes fadeIn {
@@ -118,19 +140,16 @@
   </style>
 </head>
 <body>
-
-  <!-- PANTALLA DE CONTRASEÑA -->
   <div id="login" class="pantalla">
     <div class="card">
-      <h1>💖 Bienvenido a algo especial 💖</h1>
-      <p>Ingresa la clave secreta para descubrir una sorpresa 🌹</p>
+      <h2>🔒 Acceso reservado</h2>
+      <p>Solo quien conoce mi corazón puede entrar...</p>
       <input type="password" id="password" placeholder="Contraseña">
       <br>
-      <button onclick="verificar()">💌 Ingresar</button>
+      <button onclick="verificar()">Entrar</button>
     </div>
   </div>
 
-  <!-- PANTALLA DE ROSAS -->
   <div id="rosas" class="pantalla">
     <div id="letra">Haz clic para comenzar la música</div>
     <audio id="audio" src="suiza.mp3"></audio>
@@ -182,7 +201,6 @@
 
     function mostrar() {
       if (current < letra.length && audio.currentTime >= letra[current].t) {
-        // Activa foto de fondo en #rosas al primer verso
         if (current === 0) document.getElementById('rosas').classList.add('fondoActivo');
         cont.innerText = letra[current].texto;
         cont.style.animation = "fadeIn 2s ease";
@@ -226,7 +244,6 @@
 
     lluviaFloresLogin();
 
-    // Agitar celular mueve pétalos
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', function(e) {
         const m = Math.abs(e.acceleration.x)+Math.abs(e.acceleration.y)+Math.abs(e.acceleration.z);
