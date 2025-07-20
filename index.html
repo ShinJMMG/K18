@@ -27,6 +27,8 @@
     #login {
       background: radial-gradient(circle, #ffd6dc 0%, #ffe6ea 100%);
       display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #login .card {
@@ -73,6 +75,9 @@
       background-color: #1a001a;
       color: white;
       display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
 
     #rosas h1 {
@@ -82,12 +87,10 @@
 
     /* LETRAS MÁS GRANDES, ROMÁNTICAS CON CUADRO NEGRITO TRANSPARENTE */
     #letra {
+      display: inline-block;
       font-size: 32px;              /* Tamaño grande */
       font-family: 'Dancing Script', cursive;
-      margin-top: 40px;
       padding: 20px 25px;           /* Espacio interior para el recuadro */
-      width: 80%;
-      min-height: 100px;
       color: #ffe6f0;               /* Rosa suave */
       text-shadow:                  /* Contorno negro suave */
         -1px -1px 2px #000,
@@ -100,6 +103,7 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.6);  /* Sombra para realce */
       animation: fadeIn 2s ease;
       text-align: center;                   /* Centrar texto */
+      margin: 0;                            /* Sin márgenes extra */
     }
 
     @keyframes fadeIn {
@@ -186,13 +190,13 @@
       { t: 69, texto: "Brilla sin quererlo hacer, la luna te tiene envidia.." },
       { t: 73, texto: "Si algún día pierdo la vida, vuelvo a buscarte otra vez.." },
       { t: 77, texto: "Que me disculpen las otras por decir que eres la primera.." },
-      { t: 80, texto: "Que por ti yo dejé la loquera, que, si prendo, era a solas contigo..." },
-      { t: 85, texto: "Quiero hacer el amor hasta que nos fusionemos..." },
-      { t: 89, texto: "Llevarte pa Suiza y allá nos casemos..." },
-      { t: 94, texto: "Te voy a amar hasta que la luna se apague..." },
-      { t: 98, texto: "Hasta que cada flor se seque..." },
-      { t: 102, texto: "Esto es para ti, chiquita..." },
-      { t: 105, texto: "De aquí hasta la luna, mami..." },
+      { t: 80, texto: "Que por ti yo dejé la loquera, que, si prendo, era a solas contigo.." },
+      { t: 85, texto: "Quiero hacer el amor hasta que nos fusionemos.." },
+      { t: 89, texto: "Llevarte pa Suiza y allá nos casemos.." },
+      { t: 94, texto: "Te voy a amar hasta que la luna se apague.." },
+      { t: 98, texto: "Hasta que cada flor se seque.." },
+      { t: 102, texto: "Esto es para ti, chiquita.." },
+      { t: 105, texto: "De aquí hasta la luna, mami.." },
       { t: 112, texto: "🎶...🌹🌺🌼...🎶" }
     ];
 
