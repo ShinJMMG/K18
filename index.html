@@ -80,31 +80,31 @@
       text-shadow: 2px 2px 4px #000;
     }
 
-    /* LETRAS MÁS GRANDES, ROMÁNTICAS, CON CONTORNO Y CUADRO TRANSPARENTE */
+    /* LETRAS MÁS GRANDES, ROMÁNTICAS CON CUADRO NEGRITO TRANSPARENTE */
     #letra {
-      font-size: 32px;
+      font-size: 32px;              /* Tamaño grande */
       font-family: 'Dancing Script', cursive;
       margin-top: 40px;
-      padding: 20px 25px;
-      width: auto;
-      max-width: 90%;
+      padding: 20px 25px;           /* Espacio interior para el recuadro */
+      width: 80%;
       min-height: 100px;
-      color: #ffe6f0;
-      text-shadow:
+      color: #ffe6f0;               /* Rosa suave */
+      text-shadow:                  /* Contorno negro suave */
         -1px -1px 2px #000,
          1px -1px 2px #000,
         -1px  1px 2px #000,
          1px  1px 2px #000;
-      background-color: rgba(0, 0, 0, 0.4);
-      border: 2px solid rgba(0, 0, 0, 0.6);
-      border-radius: 20px;
+      background-color: rgba(0,0,0,0.4);    /* Fondo semitransparente */
+      border: 2px solid rgba(0,0,0,0.6);    /* Borde negro marcado */
+      border-radius: 15px;                  /* Esquinas redondeadas */
+      box-shadow: 0 0 10px rgba(0,0,0,0.6);  /* Sombra para realce */
       animation: fadeIn 2s ease;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+      text-align: center;                   /* Centrar texto */
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      to   { opacity: 1; transform: scale(1); }
     }
 
     .flor {
@@ -122,19 +122,13 @@
     }
 
     @keyframes caerFlores {
-      0% {
-        transform: translateY(-50px) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh) rotate(360deg);
-        opacity: 0;
-      }
+      0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
     @keyframes moverFlores {
-      0% { transform: translateX(0); }
-      50% { transform: translateX(30px); }
+      0%   { transform: translateX(0); }
+      50%  { transform: translateX(30px); }
       100% { transform: translateX(0); }
     }
 
@@ -192,13 +186,13 @@
       { t: 69, texto: "Brilla sin quererlo hacer, la luna te tiene envidia.." },
       { t: 73, texto: "Si algún día pierdo la vida, vuelvo a buscarte otra vez.." },
       { t: 77, texto: "Que me disculpen las otras por decir que eres la primera.." },
-      { t: 80, texto: "Que por ti yo dejé la loquera, que, si prendo, era a solas contigo.." },
-      { t: 85, texto: "Quiero hacer el amor hasta que nos fusionemos.." },
-      { t: 89, texto: "Llevarte pa Suiza y allá nos casemos.." },
-      { t: 94, texto: "Te voy a amar hasta que la luna se apague.." },
-      { t: 98, texto: "Hasta que cada flor se seque.." },
-      { t: 102, texto: "Esto es para ti, chiquita.." },
-      { t: 105, texto: "De aquí hasta la luna, mami.." },
+      { t: 80, texto: "Que por ti yo dejé la loquera, que, si prendo, era a solas contigo..." },
+      { t: 85, texto: "Quiero hacer el amor hasta que nos fusionemos..." },
+      { t: 89, texto: "Llevarte pa Suiza y allá nos casemos..." },
+      { t: 94, texto: "Te voy a amar hasta que la luna se apague..." },
+      { t: 98, texto: "Hasta que cada flor se seque..." },
+      { t: 102, texto: "Esto es para ti, chiquita..." },
+      { t: 105, texto: "De aquí hasta la luna, mami..." },
       { t: 112, texto: "🎶...🌹🌺🌼...🎶" }
     ];
 
@@ -231,7 +225,7 @@
       audio.play();
       mostrar();
       lluviaFlores();
-      cont.innerText = "";
+      cont.innerText = ""; // elimina "Haz clic para comenzar la música"
     }, { once: true });
 
     const flores = [
@@ -267,6 +261,7 @@
 
     lluviaFloresLogin();
 
+    // Agitar celular mueve pétalos
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', function(event) {
         const x = event.acceleration.x;
@@ -274,8 +269,7 @@
         const z = event.acceleration.z;
         const movimiento = Math.abs(x) + Math.abs(y) + Math.abs(z);
         if (movimiento > 30) {
-          const flores = document.querySelectorAll(".flor");
-          flores.forEach(f => {
+          document.querySelectorAll(".flor").forEach(f => {
             f.style.animation = "moverFlores 1s ease";
             setTimeout(() => f.style.animation = "caerFlores 8s linear infinite", 1000);
           });
