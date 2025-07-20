@@ -80,17 +80,21 @@
       text-shadow: 2px 2px 4px #000;
     }
 
-    /* LETRAS MÁS GRANDES, ROMÁNTICAS Y SIN FONDO NEGRO */
+    /* LETRAS MÁS GRANDES, ROMÁNTICAS Y CON CONTORNO NEGRO */
     #letra {
-      font-size: 32px; /* Más grande */
-      font-family: 'Dancing Script', cursive; /* Fuente romántica */
+      font-size: 32px;
+      font-family: 'Dancing Script', cursive;
       margin-top: 40px;
       padding: 10px 20px;
       width: 80%;
       min-height: 100px;
-      color: #ffe6f0; /* Rosa suave */
-      text-shadow: 1px 1px 3px rgba(255, 182, 193, 0.7); /* Sombra suave */
-      background-color: transparent; /* Sin fondo negro */
+      color: #ffe6f0;
+      text-shadow:
+        -1px -1px 2px #000,
+         1px -1px 2px #000,
+        -1px  1px 2px #000,
+         1px  1px 2px #000;
+      background-color: transparent;
       border-radius: 15px;
       animation: fadeIn 2s ease;
     }
@@ -224,7 +228,7 @@
       audio.play();
       mostrar();
       lluviaFlores();
-      cont.innerText = ""; // ✅ elimina "Haz clic para comenzar la música"
+      cont.innerText = "";
     }, { once: true });
 
     const flores = [
@@ -260,7 +264,6 @@
 
     lluviaFloresLogin();
 
-    // 📱 Mueve pétalos al agitar el celular
     if (window.DeviceMotionEvent) {
       window.addEventListener('devicemotion', function(event) {
         const x = event.acceleration.x;
